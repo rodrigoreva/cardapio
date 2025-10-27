@@ -1,4 +1,272 @@
-<h1>Turma da Floresta</h1>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Card├ípio</title>
+  <meta name="description" content="Card├ípio simples e responsivo." />
+  <style>
+    :root {
+      --bg: #0b0b0c;
+      --fg: #f4f4f5;
+      --muted: #a1a1aa;
+      --accent: #f59e0b; /* ├ómbar suave */
+      --card: #151517;
+      --border: #242428;
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
 
+    /* Hero */
+    .hero {
+      position: relative;
+      min-height: 48vh;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url('capa.jpeg') center/cover no-repeat;
+      filter: brightness(0.6) saturate(1.05);
+      transform: scale(1.02);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,.45) 100%);
+    }
+    .hero-inner {
+      position: relative;
+      padding: 2rem;
+      text-align: center;
+    }
+    .brand {
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: .02em;
+    }
+    .tag {
+      margin-top: .5rem;
+      color: var(--muted);
+      font-size: .95rem;
+    }
 
-<img src="logo.png" alt="Logo">
+    /* Conte├║do */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1rem 3rem;
+    }
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin: 0 0 1rem;
+    }
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.25rem, 2.6vw, 2rem);
+    }
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      flex: 1;
+    }
+
+    /* Grid de produtos */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1rem;
+    }
+    .card {
+      grid-column: span 12;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 720px) {
+      .card { grid-template-columns: 1.2fr 1fr; }
+      .card.reverse { grid-template-columns: 1fr 1.2fr; }
+    }
+
+    .card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .card-body {
+      padding: 1.25rem 1.25rem 1.5rem;
+      display: grid;
+      gap: .5rem;
+      align-content: center;
+    }
+    .title { font-size: 1.25rem; font-weight: 700; }
+    .desc { color: var(--muted); }
+    .price {
+      margin-top: .25rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* Rodap├⌐ */
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 2rem 1rem 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Acessibilidade e pequenos toques */
+    a { color: inherit; }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+  
+    /* ====== Menu de P├íginas (duas imagens) ====== */
+    .menu-nav { display:flex; align-items:center; justify-content:center; gap:.75rem; margin: .5rem 0 1rem; }
+    .menu-nav button {
+      background: transparent; color: var(--fg); border: 1px solid var(--border);
+      border-radius: 999px; padding: .5rem .9rem; cursor: pointer; font-weight:600;
+    }
+    .menu-nav button:hover { background: #1c1c20; }
+    .menu-nav .page-indicator { color: var(--muted); font-size:.95rem; }
+
+    .page { margin: 0; }
+    .page img { width: 100%; height: auto; border: 1px solid var(--border); border-radius: var(--radius); display:block; background:#0e0e11; }
+    .page figcaption { text-align:center; color: var(--muted); margin-top:.5rem; font-size:.9rem; }
+
+    .thumbs { display:flex; gap:.75rem; margin-top:1rem; justify-content:center; flex-wrap:wrap; }
+    .thumbs img { width: 120px; height: 170px; object-fit: cover; border: 1px solid var(--border); border-radius: 10px; opacity:.8; cursor:pointer; transition: transform .2s ease, opacity .2s ease; }
+    .thumbs img:hover { transform: translateY(-2px); opacity:1; }
+    .thumbs img[aria-current="true"] { outline: 2px solid var(--accent); opacity: 1; }
+
+    .actions { display:flex; gap:.75rem; justify-content:center; margin-top:1rem; flex-wrap:wrap; }
+    .actions a, .actions button { text-decoration:none; color: var(--fg); background: var(--card); border:1px solid var(--border); border-radius: 10px; padding:.6rem .9rem; cursor:pointer; }
+    .actions a:hover, .actions button:hover { background:#1c1c20; }
+
+    /* Lightbox */
+    .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,.9); display: none; align-items: center; justify-content: center; padding: 2rem; z-index: 50; }
+    .lightbox.visible { display: flex; }
+    .lightbox img { max-width: 95vw; max-height: 90vh; border-radius: 8px; border:1px solid #222; }
+    .lightbox .close { position: absolute; top: 16px; right: 16px; background: transparent; color: #fff; border:1px solid #555; border-radius: 999px; width: 40px; height: 40px; font-size: 22px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <header class="hero" role="banner" aria-label="Imagem de capa do card├ípio">
+    <div class="hero-inner">
+      <div class="brand">Card├ípio</div>
+      <div class="tag">Sabores feitos com carinho</div>
+    </div>
+  </header>
+
+  <main class="container" role="main">
+    <div class="section-head">
+      <h2>Menu</h2>
+      <div class="divider" aria-hidden="true"></div>
+    </div>
+
+    <nav class="menu-nav" aria-label="Navega├º├úo das p├íginas do menu">
+      <button id="prevBtn" aria-label="P├ígina anterior">ΓùÇ</button>
+      <span class="page-indicator" id="pageIndicator" aria-live="polite">P├ígina 1 de 3</span>
+      <button id="nextBtn" aria-label="Pr├│xima p├ígina">Γû╢</button>
+    </nav>
+
+    <figure class="page">
+      <img id="pageImage" src="capa.jpeg" alt="Card├ípio ΓÇô capa" loading="eager" />
+      <figcaption class="muted">Clique/toque para ampliar</figcaption>
+    </figure>
+
+    <div class="thumbs" role="tablist" aria-label="Miniaturas das p├íginas do menu">
+      <img src="capa.jpeg" alt="Miniatura da capa" data-page="1" role="tab" aria-selected="true" aria-current="true" tabindex="0" />
+      <img src="1.jpeg" alt="Miniatura da p├ígina 1" data-page="2" role="tab" aria-selected="false" tabindex="-1" loading="lazy" />
+      <img src="2.jpeg" alt="Miniatura da p├ígina 2" data-page="3" role="tab" aria-selected="false" tabindex="-1" loading="lazy" />
+    </div>
+
+    <div class="actions">
+      <a id="downloadLink" href="capa.jpeg" download>Baixar p├ígina atual</a>
+      <button id="printBtn" type="button">Imprimir</button>
+    </div>
+  </main>
+
+  <footer>
+    <small>
+      Endere├ºo ΓÇó (00) 0000-0000 ΓÇó Aberto de ter├ºa a domingo
+    </small>
+  </footer>
+  <script>
+    (function(){
+      const pages = ["capa.jpeg", "1.jpeg", "2.jpeg"]; // capa + duas p├íginas // duas p├íginas do card├ípio
+      let idx = 0;
+      const img = document.getElementById('pageImage');
+      const indicator = document.getElementById('pageIndicator');
+      const prev = document.getElementById('prevBtn');
+      const next = document.getElementById('nextBtn');
+      const thumbs = document.querySelectorAll('.thumbs img');
+      const downloadLink = document.getElementById('downloadLink');
+
+      function update(pageIndex){
+        idx = (pageIndex + pages.length) % pages.length;
+        img.src = pages[idx];
+        img.alt = idx === 0 ? "Card├ípio ΓÇô capa" : `Card├ípio ΓÇô p├ígina ${idx}`;
+        indicator.textContent = `P├ígina ${idx+1} de ${pages.length}`;
+        downloadLink.href = pages[idx];
+        thumbs.forEach((t, i) => {
+          const current = i === idx;
+          t.setAttribute('aria-selected', current ? 'true' : 'false');
+          t.setAttribute('aria-current', current ? 'true' : 'false');
+          t.tabIndex = current ? 0 : -1;
+        });
+      }
+
+      prev.addEventListener('click', ()=> update(idx-1));
+      next.addEventListener('click', ()=> update(idx+1));
+      document.addEventListener('keydown', (e)=>{
+        if (e.key === 'ArrowLeft') update(idx-1);
+        if (e.key === 'ArrowRight') update(idx+1);
+        if (e.key === 'Escape') hideLightbox();
+      });
+      thumbs.forEach(t => t.addEventListener('click', ()=> update(Number(t.dataset.page)-1)));
+
+      // Lightbox simples
+      const lb = document.createElement('div');
+      lb.className = 'lightbox';
+      lb.innerHTML = '<button class="close" aria-label="Fechar">├ù</button><img alt="Visualiza├º├úo ampliada" />';
+      document.body.appendChild(lb);
+      const lbImg = lb.querySelector('img');
+      const lbClose = lb.querySelector('.close');
+
+      function showLightbox(){ lb.classList.add('visible'); lbImg.src = pages[idx]; }
+      function hideLightbox(){ lb.classList.remove('visible'); }
+
+      img.addEventListener('click', showLightbox);
+      lb.addEventListener('click', (e)=>{ if(e.target === lb) hideLightbox(); });
+      lbClose.addEventListener('click', hideLightbox);
+
+      // Imprimir somente a imagem atual
+      document.getElementById('printBtn').addEventListener('click', ()=>{
+        const w = window.open('', '_blank');
+        if(!w) return;
+        w.document.write(`<!DOCTYPE html><html><head><title>Imprimir p├ígina ${idx+1}</title><style>body{margin:0}img{width:100%;height:auto;}</style></head><body><img src="${pages[idx]}" alt="Card├ípio ΓÇô p├ígina ${idx+1}"></body></html>`);
+        w.document.close();
+        w.focus();
+        w.print();
+      });
+
+      // Pr├⌐-carrega a segunda p├ígina para transi├º├úo suave
+      const pre1 = new Image(); pre1.src = pages[1]; const pre2 = new Image(); pre2.src = pages[2];
+    })();
+  </script>
+</body>
+</html>
