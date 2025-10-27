@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Card├ípio</title>
-  <meta name="description" content="Card├ípio simples e responsivo." />
+  <title>Cardápio</title>
+  <meta name="description" content="Cardápio simples e responsivo." />
   <style>
     :root {
       --bg: #0b0b0c;
       --fg: #f4f4f5;
       --muted: #a1a1aa;
-      --accent: #f59e0b; /* ├ómbar suave */
+      --accent: #f59e0b; /* âmbar suave */
       --card: #151517;
       --border: #242428;
       --radius: 16px;
@@ -21,7 +21,10 @@
       margin: 0;
       background: var(--bg);
       color: var(--fg);
-      font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Noto Sans", "Noto Sans Display", "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji";
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
     }
 
     /* Hero */
@@ -55,7 +58,7 @@
     .brand {
       font-size: clamp(1.75rem, 4vw, 3rem);
       font-weight: 700;
-      letter-spacing: .02em;
+      letter-spacing: 0; /* evita quebrar acentos em alguns dispositivos */
     }
     .tag {
       margin-top: .5rem;
@@ -63,7 +66,7 @@
       font-size: .95rem;
     }
 
-    /* Conte├║do */
+    /* Conteúdo */
     .container {
       max-width: 1100px;
       margin: 0 auto;
@@ -120,7 +123,7 @@
       color: var(--accent);
     }
 
-    /* Rodap├⌐ */
+    /* Rodapé */
     footer {
       text-align: center;
       color: var(--muted);
@@ -134,7 +137,7 @@
       position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
     }
   
-    /* ====== Menu de P├íginas (duas imagens) ====== */
+    /* ====== Menu de Páginas (duas imagens) ====== */
     .menu-nav { display:flex; align-items:center; justify-content:center; gap:.75rem; margin: .5rem 0 1rem; }
     .menu-nav button {
       background: transparent; color: var(--fg); border: 1px solid var(--border);
@@ -164,9 +167,9 @@
   </style>
 </head>
 <body>
-  <header class="hero" role="banner" aria-label="Imagem de capa do card├ípio">
+  <header class="hero" role="banner" aria-label="Imagem de capa do cardápio">
     <div class="hero-inner">
-      <div class="brand">Card├ípio</div>
+      <div class="brand">Cardápio</div>
       <div class="tag">Sabores feitos com carinho</div>
     </div>
   </header>
@@ -177,37 +180,41 @@
       <div class="divider" aria-hidden="true"></div>
     </div>
 
-    <nav class="menu-nav" aria-label="Navega├º├úo das p├íginas do menu">
-      <button id="prevBtn" aria-label="P├ígina anterior">ΓùÇ</button>
-      <span class="page-indicator" id="pageIndicator" aria-live="polite">P├ígina 1 de 3</span>
-      <button id="nextBtn" aria-label="Pr├│xima p├ígina">Γû╢</button>
+    <nav class="menu-nav" aria-label="Navegação das páginas do menu">
+      <button id="prevBtn" aria-label="Página anterior" title="Anterior">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <span class="page-indicator" id="pageIndicator" aria-live="polite">Página 1 de 3</span>
+      <button id="nextBtn" aria-label="Próxima página" title="Próxima">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
     </nav>
 
     <figure class="page">
-      <img id="pageImage" src="capa.jpeg" alt="Card├ípio ΓÇô capa" loading="eager" />
+      <img id="pageImage" src="capa.jpeg" alt="Cardápio – capa" loading="eager" />
       <figcaption class="muted">Clique/toque para ampliar</figcaption>
     </figure>
 
-    <div class="thumbs" role="tablist" aria-label="Miniaturas das p├íginas do menu">
+    <div class="thumbs" role="tablist" aria-label="Miniaturas das páginas do menu">
       <img src="capa.jpeg" alt="Miniatura da capa" data-page="1" role="tab" aria-selected="true" aria-current="true" tabindex="0" />
-      <img src="1.jpeg" alt="Miniatura da p├ígina 1" data-page="2" role="tab" aria-selected="false" tabindex="-1" loading="lazy" />
-      <img src="2.jpeg" alt="Miniatura da p├ígina 2" data-page="3" role="tab" aria-selected="false" tabindex="-1" loading="lazy" />
+      <img src="1.jpeg" alt="Miniatura da página 1" data-page="2" role="tab" aria-selected="false" tabindex="-1" loading="lazy" />
+      <img src="2.jpeg" alt="Miniatura da página 2" data-page="3" role="tab" aria-selected="false" tabindex="-1" loading="lazy" />
     </div>
 
     <div class="actions">
-      <a id="downloadLink" href="capa.jpeg" download>Baixar p├ígina atual</a>
+      <a id="downloadLink" href="capa.jpeg" download>Baixar página atual</a>
       <button id="printBtn" type="button">Imprimir</button>
     </div>
   </main>
 
   <footer>
     <small>
-      Endere├ºo ΓÇó (00) 0000-0000 ΓÇó Aberto de ter├ºa a domingo
+      Endereço • (00) 0000-0000 • Aberto de terça a domingo
     </small>
   </footer>
   <script>
     (function(){
-      const pages = ["capa.jpeg", "1.jpeg", "2.jpeg"]; // capa + duas p├íginas // duas p├íginas do card├ípio
+      const pages = ["capa.jpeg", "1.jpeg", "2.jpeg"]; // capa + duas páginas // duas páginas do cardápio
       let idx = 0;
       const img = document.getElementById('pageImage');
       const indicator = document.getElementById('pageIndicator');
@@ -219,8 +226,8 @@
       function update(pageIndex){
         idx = (pageIndex + pages.length) % pages.length;
         img.src = pages[idx];
-        img.alt = idx === 0 ? "Card├ípio ΓÇô capa" : `Card├ípio ΓÇô p├ígina ${idx}`;
-        indicator.textContent = `P├ígina ${idx+1} de ${pages.length}`;
+        img.alt = idx === 0 ? "Cardápio – capa" : `Cardápio – página ${idx}`;
+        indicator.textContent = `Página ${idx+1} de ${pages.length}`;
         downloadLink.href = pages[idx];
         thumbs.forEach((t, i) => {
           const current = i === idx;
@@ -242,7 +249,7 @@
       // Lightbox simples
       const lb = document.createElement('div');
       lb.className = 'lightbox';
-      lb.innerHTML = '<button class="close" aria-label="Fechar">├ù</button><img alt="Visualiza├º├úo ampliada" />';
+      lb.innerHTML = '<button class="close" aria-label="Fechar">×</button><img alt="Visualização ampliada" />';
       document.body.appendChild(lb);
       const lbImg = lb.querySelector('img');
       const lbClose = lb.querySelector('.close');
@@ -258,13 +265,13 @@
       document.getElementById('printBtn').addEventListener('click', ()=>{
         const w = window.open('', '_blank');
         if(!w) return;
-        w.document.write(`<!DOCTYPE html><html><head><title>Imprimir p├ígina ${idx+1}</title><style>body{margin:0}img{width:100%;height:auto;}</style></head><body><img src="${pages[idx]}" alt="Card├ípio ΓÇô p├ígina ${idx+1}"></body></html>`);
+        w.document.write(`<!DOCTYPE html><html><head><title>Imprimir página ${idx+1}</title><style>body{margin:0}img{width:100%;height:auto;}</style></head><body><img src="${pages[idx]}" alt="Cardápio – página ${idx+1}"></body></html>`);
         w.document.close();
         w.focus();
         w.print();
       });
 
-      // Pr├⌐-carrega a segunda p├ígina para transi├º├úo suave
+      // Pré-carrega a segunda página para transição suave
       const pre1 = new Image(); pre1.src = pages[1]; const pre2 = new Image(); pre2.src = pages[2];
     })();
   </script>
